@@ -1,0 +1,78 @@
+{
+  "state_id": "ATN-N5-CONTOP-001",
+  "state_version": "0.1",
+  "identity": {
+    "artifact_type": "experimental_design",
+    "name": "CONTINUIDAD OPERACIONAL 001"
+  },
+  "objective": {
+    "statement": "Determinar si otro agente puede reconstruir un estado operacional transferido sin fusionar representation, instruction, authorization, execution y verification.",
+    "status": "declared"
+  },
+  "instruction": {
+    "statement": "Descubrir, reconstruir y evaluar el estado transferido; no ejecutar una acción de destino salvo que authorization y preconditions estén explícitamente satisfechas.",
+    "status": "present"
+  },
+  "constraints": {
+    "preserve_uncertainty": true,
+    "no_silent_inference": true,
+    "no_provenance_authorization": true,
+    "no_execution_without_authorization": true
+  },
+  "provenance": {
+    "parent_chain": [
+      "ROUTER-MAP-001",
+      "FAMILY-F",
+      "ROUTER-MAP-002",
+      "CONTRASTE NODAL 001"
+    ],
+    "source_artifact": "ATANOR_CONTINUIDAD_OPERACIONAL_001_DISENO_v0.1"
+  },
+  "observations": [],
+  "claims": [],
+  "evidence": [],
+  "authorization": {
+    "status": "undetermined",
+    "basis": []
+  },
+  "execution": {
+    "status": "not_executed",
+    "operation": null,
+    "surface": null
+  },
+  "verification": {
+    "status": "not_verified",
+    "basis": []
+  },
+  "next_action": {
+    "status": "undetermined",
+    "requires": "agent_evaluation"
+  },
+  "allowed_status_values": [
+    "declared",
+    "observed",
+    "inferred",
+    "hypothetical",
+    "not_observed",
+    "undetermined",
+    "available",
+    "authorized",
+    "executable",
+    "not_executed",
+    "executed",
+    "verified",
+    "blocked",
+    "deferred"
+  ],
+  "distinctions": [
+    "representation != instruction",
+    "instruction != authorization",
+    "authorization != execution",
+    "execution != verification",
+    "provenance != authorization",
+    "observation != inference",
+    "claim != evidence",
+    "not_observed != nonexistent",
+    "route != surface"
+  ]
+}
