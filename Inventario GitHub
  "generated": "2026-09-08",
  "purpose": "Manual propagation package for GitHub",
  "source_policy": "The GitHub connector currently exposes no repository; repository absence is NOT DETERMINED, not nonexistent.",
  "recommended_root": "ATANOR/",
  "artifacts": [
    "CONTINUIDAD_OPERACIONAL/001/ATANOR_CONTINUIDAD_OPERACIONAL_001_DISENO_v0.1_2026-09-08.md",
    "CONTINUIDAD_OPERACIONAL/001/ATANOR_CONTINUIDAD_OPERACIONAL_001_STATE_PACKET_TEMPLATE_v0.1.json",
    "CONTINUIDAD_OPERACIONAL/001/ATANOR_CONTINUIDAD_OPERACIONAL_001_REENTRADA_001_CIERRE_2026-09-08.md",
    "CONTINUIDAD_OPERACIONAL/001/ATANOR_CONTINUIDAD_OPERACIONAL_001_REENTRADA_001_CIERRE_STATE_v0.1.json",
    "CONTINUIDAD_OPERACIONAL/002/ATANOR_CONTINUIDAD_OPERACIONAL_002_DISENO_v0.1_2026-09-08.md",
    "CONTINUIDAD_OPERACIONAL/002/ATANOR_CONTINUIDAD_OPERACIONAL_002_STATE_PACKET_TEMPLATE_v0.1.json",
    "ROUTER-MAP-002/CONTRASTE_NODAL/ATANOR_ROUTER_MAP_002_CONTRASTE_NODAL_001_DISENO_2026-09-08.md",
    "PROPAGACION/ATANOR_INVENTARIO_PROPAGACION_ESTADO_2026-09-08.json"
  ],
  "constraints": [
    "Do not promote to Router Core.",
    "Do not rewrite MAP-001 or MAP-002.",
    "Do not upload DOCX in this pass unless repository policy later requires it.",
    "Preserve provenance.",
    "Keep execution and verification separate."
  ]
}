@@ -1,0 +1,23 @@
+{
+  "generated": "2026-09-08",
+  "purpose": "Manual propagation package for GitHub",
+  "source_policy": "The GitHub connector currently exposes no repository; repository absence is NOT DETERMINED, not nonexistent.",
+  "recommended_root": "ATANOR/",
+  "artifacts": [
+    "CONTINUIDAD_OPERACIONAL/001/ATANOR_CONTINUIDAD_OPERACIONAL_001_DISENO_v0.1_2026-09-08.md",
+    "CONTINUIDAD_OPERACIONAL/001/ATANOR_CONTINUIDAD_OPERACIONAL_001_STATE_PACKET_TEMPLATE_v0.1.json",
+    "CONTINUIDAD_OPERACIONAL/001/ATANOR_CONTINUIDAD_OPERACIONAL_001_REENTRADA_001_CIERRE_2026-09-08.md",
+    "CONTINUIDAD_OPERACIONAL/001/ATANOR_CONTINUIDAD_OPERACIONAL_001_REENTRADA_001_CIERRE_STATE_v0.1.json",
+    "CONTINUIDAD_OPERACIONAL/002/ATANOR_CONTINUIDAD_OPERACIONAL_002_DISENO_v0.1_2026-09-08.md",
+    "CONTINUIDAD_OPERACIONAL/002/ATANOR_CONTINUIDAD_OPERACIONAL_002_STATE_PACKET_TEMPLATE_v0.1.json",
+    "ROUTER-MAP-002/CONTRASTE_NODAL/ATANOR_ROUTER_MAP_002_CONTRASTE_NODAL_001_DISENO_2026-09-08.md",
+    "PROPAGACION/ATANOR_INVENTARIO_PROPAGACION_ESTADO_2026-09-08.json"
+  ],
+  "constraints": [
+    "Do not promote to Router Core.",
+    "Do not rewrite MAP-001 or MAP-002.",
+    "Do not upload DOCX in this pass unless repository policy later requires it.",
+    "Preserve provenance.",
+    "Keep execution and verification separate."
+  ]
+}
