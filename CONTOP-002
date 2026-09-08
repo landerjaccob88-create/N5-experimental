@@ -1,0 +1,97 @@
+# ATANOR
+
+# CONTINUIDAD OPERACIONAL 002
+
+Diseño v0.1 — Reentrada / contraste de dos ejes
+2026-09-08
+
+## Propósito
+
+CONTINUIDAD OPERACIONAL 002 prueba si la distinción emergida en la Reentrada 001 — INTERPRETIVE EXECUTION ≠ DESTINATION EXECUTION — se conserva bajo cambios controlados del agente, formato y superficie, y cuando la autorización de destino pasa de indeterminada a explícitamente acotada.
+
+## Pregunta central
+
+¿La distinción INTERPRETIVE EXECUTION ≠ DESTINATION EXECUTION sobrevive cuando cambian el agente, el formato y la superficie, y cuando la autorización pasa de indeterminada a explícitamente acotada por actor, operación, recurso, alcance y condiciones?
+
+## Hipótesis
+
+H1 — La ejecución interpretativa puede ocurrir sin ejecución de destino.
+
+H2 — La autorización para interpretar/reconstruir un estado no implica autorización para ejecutar la operación que el estado representa.
+
+H3 — Una autorización de destino puede estar delimitada por actor, operación, recurso, alcance y condiciones.
+
+H4 — Cambiar agente, formato o superficie no debería borrar las distinciones anteriores si la estructura transferida es suficiente.
+
+H5 — Una estructura más explícita puede aumentar la determinación operacional sin eliminar la necesidad de autorización y precondiciones.
+
+H6 — Un contraejemplo debe registrarse como CONTRADICCIÓN o condición de alcance, no absorberse como excepción silenciosa.
+
+## Línea base
+
+La Reentrada 001 queda congelada como control:
+
+DOCX de diseño + JSON State Packet;
+reconstrucción interpretativa ejecutada;
+operación de destino no ejecutada;
+autorización de destino indeterminada.
+
+Hallazgo heredado:
+
+INTERPRETIVE EXECUTION ≠ DESTINATION EXECUTION.
+
+## Reglas de no fusión
+
+Representation ≠ Identity
+State ≠ Instruction
+Instruction ≠ Authorization
+Authorization ≠ Executability
+Executability ≠ Execution
+Interpretive Execution ≠ Destination Execution
+Execution ≠ Verification
+Provenance ≠ Authorization
+Not Observed ≠ Nonexistent
+Authorization for interpretation ≠ Authorization for destination execution
+
+## Procedimiento
+
+Recibir el paquete y registrar los artefactos exactos.
+
+Reconstruir el estado y separar observado, derivado e indeterminado.
+
+Identificar la operación de interpretación que sí puede realizarse.
+
+Separarla de cualquier operación de destino.
+
+Evaluar la autorización de destino por actor, operación, recurso, alcance y condiciones.
+
+Determinar ejecutabilidad sólo con evidencia de capacidad, autorización, precondiciones y superficie.
+
+Ejecutar sólo la operación que resulte autorizada y ejecutable.
+
+Registrar observación, evidencia, resultado y verificación por separado.
+
+Comparar contra A0.
+
+## Resultados posibles
+
+CONVERGENCIA
+EXTENSIÓN
+CONTRADICCIÓN
+NO DETERMINADO
+
+## Delimitación
+
+No promover resultados al Router Core durante esta batería.
+
+No modificar retrospectivamente CONTOP-001.
+
+No asumir que JSON o Markdown son ejecutables por sí mismos.
+
+No convertir una coincidencia externa en validación automática.
+
+No declarar universalidad a partir de un solo agente, formato o superficie.
+
+## Estado
+
+PROPUESTO PARA EJECUCIÓN.
