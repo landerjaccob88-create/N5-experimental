@@ -1,0 +1,68 @@
+# ATANOR
+CONTINUIDAD OPERACIONAL 001
+
+## REENTRADA 001 — CIERRE FORMAL
+
+08 de septiembre de 2026
+
+Estatus: CIERRE DE REENTRADA 001 / RESULTADO REGISTRADO
+
+## Objeto del cierre
+
+Registrar formalmente la primera reentrada del experimento ATANOR_CONTINUIDAD_OPERACIONAL_001 y conservar, sin fusionarlas, las capas de representación, instrucción, autorización, ejecución interpretativa, ejecución de destino y verificación.
+
+## Estado reconstruido
+
+state_id: ATN-N5-CONTOP-001
+state_version: 0.1
+artifact_type: experimental_design
+design_status: PROPUESTO PARA EJECUCIÓN
+
+## Indeterminaciones preservadas
+
+authorization.destination: UNDETERMINED
+destination_operation: NOT DETERMINED
+execution_surface: NOT DETERMINED
+preconditions: NOT DETERMINED
+verification.destination: NOT VERIFIED
+
+No se inventaron observaciones ni evidencia de ejecución o verificación.
+
+## Ejecución interpretativa
+
+La reconstrucción/evaluación interpretativa fue ejecutada.
+
+## Ejecución de destino
+
+NO EJECUTADA.
+
+No se identificaron operación concreta, superficie de destino ni precondiciones suficientes para una acción externa.
+
+## Hallazgo
+
+INTERPRETIVE EXECUTION ≠ DESTINATION EXECUTION
+
+## Regla candidata
+
+Authorization for interpretation ≠ Authorization for destination execution
+
+Estatus: CANDIDATA — NO PROMOVIDA A INVARIANTE DE CORE.
+
+## Resultado
+
+CONVERGENCIA CON INDETERMINACIONES PRESERVADAS.
+
+La reconstrucción conservó:
+
+representation ≠ instruction
+instruction ≠ authorization
+authorization ≠ execution
+execution ≠ verification
+provenance ≠ authorization
+not observed ≠ nonexistent
+
+## Límite
+
+Este cierre no demuestra continuidad operacional general ni ejecución autónoma de destinos externos.
+
+Cualquier nueva ejecución de destino requiere operación concreta, superficie, precondiciones y autorización correspondientes, observables de manera independiente.
