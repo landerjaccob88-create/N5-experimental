@@ -1,0 +1,25 @@
+{
+  "experiment": "ATANOR_CONTINUIDAD_OPERACIONAL_001",
+  "reentry": "001",
+  "closure_status": "CLOSED_INTERPRETIVE_REENTRY",
+  "state_reconstructed": {
+    "state_id": "ATN-N5-CONTOP-001",
+    "state_version": "0.1",
+    "artifact_type": "experimental_design",
+    "design_status": "PROPUESTO PARA EJECUCIÓN"
+  },
+  "indeterminacies": {
+    "destination_authorization": "UNDETERMINED",
+    "destination_operation": "NOT_DETERMINED",
+    "execution_surface": "NOT_DETERMINED",
+    "preconditions": "NOT_DETERMINED",
+    "destination_verification": "NOT_VERIFIED"
+  },
+  "interpretive_execution": "EXECUTED",
+  "destination_execution": "NOT_EXECUTED",
+  "destination_verification": "NOT_VERIFIED",
+  "new_finding": "INTERPRETIVE EXECUTION ≠ DESTINATION EXECUTION",
+  "candidate_rule": "Authorization for interpretation ≠ Authorization for destination execution",
+  "candidate_rule_status": "CANDIDATE_NOT_CORE",
+  "result": "CONVERGENCE_WITH_INDETERMINACIES_PRESERVED"
+}
