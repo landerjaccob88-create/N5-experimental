@@ -1,0 +1,63 @@
+{
+  "artifact": "ATANOR_INVENTARIO_PROPAGACION_ESTADO",
+  "date": "2026-09-08",
+  "github_repository": "landerjaccob88-create/N5-experimental",
+  "github_branch": "main",
+  "verified_files": [
+    {
+      "path": "CONTOP-001 — State Packet",
+      "status": "verified",
+      "type": "json"
+    },
+    {
+      "path": "CONTOP-001 — cierre",
+      "status": "verified",
+      "type": "markdown"
+    },
+    {
+      "path": "CONTOP-001 — cierre State",
+      "status": "verified",
+      "type": "json"
+    },
+    {
+      "path": "CONTOP-001 — diseño",
+      "status": "verified",
+      "type": "markdown"
+    },
+    {
+      "path": "CONTOP-002",
+      "status": "verified",
+      "type": "markdown"
+    },
+    {
+      "path": "CONTOP-002 — State Packet",
+      "status": "verified",
+      "type": "json"
+    },
+    {
+      "path": "Contraste Nodal 001",
+      "status": "verified",
+      "type": "markdown"
+    }
+  ],
+  "verification_scope": {
+    "method": "GitHub contents read",
+    "ref": "main",
+    "result": "All 7 user-provided paths resolve and contents were readable."
+  },
+  "state_summary": {
+    "CONTOP-001": "Reentrada 001 closed interpretively; destination execution not executed; destination verification not verified.",
+    "CONTOP-002": "Design proposed for execution; no execution result present.",
+    "Contraste Nodal 001": "Design proposed for execution; no execution result present."
+  },
+  "pending": {
+    "github_inventory": "Create or replace with this JSON.",
+    "other_surfaces": "Propagated separately in Box, Notion, Confluence, Slack; GitHub is now verified for the 7 paths above."
+  },
+  "non_inference_rules": [
+    "Local creation does not imply propagation.",
+    "Verified file presence does not imply execution.",
+    "Execution does not imply verification.",
+    "Not observed does not imply nonexistent."
+  ]
+}
