@@ -38,21 +38,34 @@
       "path": "Contraste Nodal 001",
       "status": "verified",
       "type": "markdown"
+    },
+    {
+      "path": "Inventario GitHub verificado",
+      "status": "verified",
+      "type": "json"
     }
   ],
   "verification_scope": {
     "method": "GitHub contents read",
     "ref": "main",
-    "result": "All 7 user-provided paths resolve and contents were readable."
+    "result": "All 7 experimental paths plus this inventory path were readable after propagation."
   },
   "state_summary": {
     "CONTOP-001": "Reentrada 001 closed interpretively; destination execution not executed; destination verification not verified.",
     "CONTOP-002": "Design proposed for execution; no execution result present.",
     "Contraste Nodal 001": "Design proposed for execution; no execution result present."
   },
+  "propagation_state": {
+    "box": "propagated",
+    "notion": "propagated",
+    "confluence": "propagated",
+    "slack": "propagated",
+    "canva": "no_new_artifact_required",
+    "github": "verified"
+  },
   "pending": {
-    "github_inventory": "Create or replace with this JSON.",
-    "other_surfaces": "Propagated separately in Box, Notion, Confluence, Slack; GitHub is now verified for the 7 paths above."
+    "github_inventory": "completed_and_verified",
+    "other_surfaces": "propagated separately; no additional propagation required for this layer at this checkpoint."
   },
   "non_inference_rules": [
     "Local creation does not imply propagation.",
