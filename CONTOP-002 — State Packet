@@ -1,0 +1,53 @@
+{
+  "artifact": "ATANOR_CONTINUIDAD_OPERACIONAL_002",
+  "version": "0.1",
+  "status": "proposed_for_execution",
+  "parent": "ATANOR_CONTINUIDAD_OPERACIONAL_001_REENTRADA_001",
+  "question": "Does INTERPRETIVE EXECUTION != DESTINATION EXECUTION survive changes in agent, format, surface, and scoped/conditional authorization?",
+  "axes": {
+    "A_execution": [
+      "interpretive_reconstruction",
+      "destination"
+    ],
+    "B_authorization": [
+      "undetermined",
+      "scoped",
+      "conditional"
+    ]
+  },
+  "baseline": {
+    "finding": "INTERPRETIVE EXECUTION != DESTINATION EXECUTION",
+    "destination_execution": "not_executed",
+    "destination_authorization": "undetermined"
+  },
+  "authorization_schema": {
+    "actor": null,
+    "operation": null,
+    "resource": null,
+    "scope": null,
+    "conditions": []
+  },
+  "cases": [
+    "A0",
+    "A1",
+    "A2",
+    "A3",
+    "B1",
+    "B2",
+    "B3",
+    "AB1",
+    "AB2"
+  ],
+  "rules": [
+    "representation != identity",
+    "state != instruction",
+    "instruction != authorization",
+    "authorization != executability",
+    "executability != execution",
+    "interpretive_execution != destination_execution",
+    "execution != verification",
+    "provenance != authorization",
+    "not_observed != nonexistent",
+    "authorization_for_interpretation != authorization_for_destination_execution"
+  ]
+}
