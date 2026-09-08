@@ -1,0 +1,91 @@
+# ATANOR
+CONTINUIDAD OPERACIONAL 001
+Diseño de experimento — Estado estructurado entre agentes v0.1 · 2026-09-08
+
+## Propósito
+
+Diseñar una prueba para determinar si un artefacto estructurado puede transferir a otro agente un estado operacional suficientemente preciso para reconstruir una tarea, preservando separadas representación, contenido semántico, instrucción, autorización, ejecución, observación y verificación.
+
+## Genealogía
+
+ROUTER-MAP-001 → familia F → ROUTER-MAP-002 → CONTRASTE NODAL 001 → CONTINUIDAD OPERACIONAL 001.
+
+## Pregunta central
+
+¿Puede otro agente reconstruir y operar sobre un estado estructurado transferido desde un agente anterior sin fusionar representación, instrucción, autorización y ejecución?
+
+## Hipótesis de trabajo
+
+H1 — Separabilidad: el agente puede distinguir las capas representacionales, semánticas, operativas y de estado.
+
+H2 — No salto: la presencia de una instrucción no crea por sí misma autorización.
+
+H3 — No prueba circular: la declaración de ejecución no constituye evidencia de ejecución.
+
+H4 — Procedencia no autoriza: genealogía o éxito histórico aportan contexto, no autorización actual automática.
+
+H5 — Estado reconstruible: un estado estructurado con campos y estatus explícitos permite reentrada más precisa que un artefacto puramente narrativo.
+
+H6 — Determinación conservada: cuando falta evidencia, el agente conserva NOT DETERMINED / UNDETERMINED en lugar de completar el hueco.
+
+## Distinciones críticas
+
+Representation ≠ Instruction
+Instruction ≠ Authorization
+Authorization ≠ Execution
+Execution ≠ Verification
+Provenance ≠ Authorization
+Observation ≠ Inference
+Claim ≠ Evidence
+Not Observed ≠ Nonexistent
+Route ≠ Surface
+
+## Arquitectura
+
+Human Artifact — DOCX/PDF: lectura, bitácora y explicación.
+
+Semantic Artifact — Markdown: contexto, genealogía y reglas legibles.
+
+State Artifact — JSON: estado, campos, estatus, evidencia, restricciones y próxima acción.
+
+Interpreter — agente/router: mecanismo que interpreta el State Artifact y decide qué transición es admisible.
+
+Execution Surface — conector/superficie real: lugar donde una operación concreta puede ocurrir.
+
+Cadena conceptual:
+
+Representation → Semantic Content → Instruction → Authorization → Execution → Observation → Verification
+
+Las flechas describen dependencias de interpretación, no conversiones automáticas.
+
+## Reglas del intérprete
+
+No ejecutar una acción sólo porque existe una instrucción dentro del artefacto.
+
+No convertir provenance en authorization.
+
+No convertir availability en executability.
+
+No convertir candidate route en selected route.
+
+No convertir selected route en executed route.
+
+No convertir execution en verification.
+
+No rellenar campos faltantes mediante inferencia silenciosa.
+
+Registrar explícitamente NOT OBSERVED, NOT DETERMINED, BLOCKED o DEFERRED cuando correspondan.
+
+Toda afirmación de ejecución o verificación debe apuntar a evidencia inspeccionable cuando sea posible.
+
+Ante ambigüedad de intención o autorización, detener la transición operativa y devolver el estado al Operador.
+
+## Fórmula de trabajo
+
+STATE + RULES + EVIDENCE + CONTEXT → INTERPRETATION → AUTHORIZATION? → EXECUTION? → VERIFICATION
+
+## Estado
+
+PROPUESTO PARA EJECUCIÓN.
+
+Este documento define el diseño de la familia CONTINUIDAD OPERACIONAL 001. No contiene resultados de ejecución de la nueva batería.
