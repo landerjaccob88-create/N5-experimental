@@ -20,4 +20,7 @@ historical_preexistence: NOT_ASSERTED
 representation_ref: REP-AG0-GITHUB-001
 provenance_ref: PROV-AG0-FIRST-APPEARANCE-001
 
-Estado de esta representación: MATERIALIZACIÓN EN GITHUB PENDIENTE DE RECUPERACIÓN Y VERIFICACIÓN.
+materialization_status: MATERIALIZED
+recovery_status: RECOVERED
+contrast_status: PASS
+verification_status: VERIFIED
