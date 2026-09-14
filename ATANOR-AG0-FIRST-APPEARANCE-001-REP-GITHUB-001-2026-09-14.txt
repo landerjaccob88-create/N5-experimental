@@ -1,0 +1,23 @@
+ATANOR-AG0-FIRST-APPEARANCE-001 — REPRESENTACIÓN DERIVADA / GITHUB
+
+record_id: ATANOR-AG0-FIRST-APPEARANCE-001
+agent_id: ATANOR-AG0-001
+ido_ref: IDO-A0-001
+designation: A0
+
+canonical_name: CAZADOR-DE-ESTRELLAS
+display_name: Cazador de Estrellas
+agent_type: AGENT_0
+
+authority_id: Q
+authorization_mode: DELEGATED
+self_authorization: false
+
+first_appearance: FIRST_CANONICAL_APPEARANCE
+created_by: Q
+historical_preexistence: NOT_ASSERTED
+
+representation_ref: REP-AG0-GITHUB-001
+provenance_ref: PROV-AG0-FIRST-APPEARANCE-001
+
+Estado de esta representación: MATERIALIZACIÓN EN GITHUB PENDIENTE DE RECUPERACIÓN Y VERIFICACIÓN.
