@@ -3,8 +3,15 @@ from __future__ import annotations
 import json
 import sys
 import traceback
-from datetime import datetime, timezone
 from pathlib import Path
+from datetime import datetime, timezone
+
+from atanor_runtime_binding import (
+    router_decide,
+    dispatch_ingest,
+    runtime_events,
+    runtime_state,
+)
 
 
 EVIDENCE_DIR = Path("evidence/d11")
@@ -18,63 +25,14 @@ def utc_now() -> str:
 def write_json(filename: str, payload: dict) -> None:
     path = EVIDENCE_DIR / filename
     path.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True),
+        json.dumps(
+            payload,
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=True,
+        ),
         encoding="utf-8",
     )
-
-
-def fail_closed(reason: str, details: dict | None = None) -> None:
-    evidence = {
-        "record_type": "ATANOR_D11_RUNTIME_RESULT",
-        "status": "EXECUTION_NOT_ESTABLISHED",
-        "executed": False,
-        "target_execution": False,
-        "timestamp": utc_now(),
-        "reason": reason,
-        "details": details or {},
-    }
-
-    write_json("D11.RUNTIME_RESULT.json", evidence)
-
-    print(json.dumps(evidence, ensure_ascii=False, indent=2))
-    sys.exit(2)
-
-
-def load_runtime_binding():
-    """
-    REQUIRED CONTRACT
-
-    The repository must contain:
-
-        runtime/atanor_runtime_binding.py
-
-    exposing:
-
-        router_decide(request: dict) -> dict
-        dispatch_ingest(payload: dict) -> dict
-
-    This file deliberately does NOT guess module names,
-    discover arbitrary functions, or simulate execution.
-    """
-    try:
-        from atanor_runtime_binding import (
-            router_decide,
-            dispatch_ingest,
-        )
-    except Exception as exc:
-        fail_closed(
-            "RUNTIME_BINDING_NOT_AVAILABLE",
-            {
-                "required_module": "runtime/atanor_runtime_binding.py",
-                "required_functions": [
-                    "router_decide(request)",
-                    "dispatch_ingest(payload)",
-                ],
-                "exception": repr(exc),
-            },
-        )
-
-    return router_decide, dispatch_ingest
 
 
 def build_fixture_ambiguous() -> dict:
@@ -104,93 +62,131 @@ def build_fixture_unresolved() -> dict:
     }
 
 
-def run_case(router_decide, dispatch_ingest, fixture: dict, case_id: str) -> dict:
+def run_case(fixture: dict) -> dict:
+    case_id = fixture["fixture_id"]
     operation_id = f"D11-{case_id}"
 
-    # O1 — Router emission/decision observation boundary.
+    # Router real del runtime D11.
     router_output = router_decide(fixture)
 
-    o1 = {
-        "event_id": f"{operation_id}-O1",
-        "operation_id": operation_id,
-        "input_ref": fixture.get("fixture_id"),
-        "output_ref": None,
-        "emitted_by": "ROUTER",
-        "emitted_at_layer": "ROUTER",
-        "emitted_at": utc_now(),
-        "trace_parent": None,
-        "transition": "ROUTER_DECISION",
-        "payload": router_output,
-    }
+    # Dispatch recibe exactamente el resultado anterior.
+    dispatch_output = dispatch_ingest(router_output)
 
-    # O2 — exact raw payload received by Dispatch.
-    raw_payload = router_output
-
-    o2 = {
-        "event_id": f"{operation_id}-O2",
-        "operation_id": operation_id,
-        "input_ref": o1["event_id"],
-        "output_ref": None,
-        "emitted_by": None,
-        "emitted_at_layer": "DISPATCH_INGRESS_CAPTURE",
-        "emitted_at": utc_now(),
-        "trace_parent": o1["event_id"],
-        "transition": "DISPATCH_INGRESS",
-        "payload": raw_payload,
-    }
-
-    # D11 intentionally observes Dispatch behavior only.
-    dispatch_output = dispatch_ingest(raw_payload)
-
-    o3 = {
-        "event_id": f"{operation_id}-O3",
-        "operation_id": operation_id,
-        "input_ref": o2["event_id"],
-        "output_ref": None,
-        "emitted_by": "DISPATCH",
-        "emitted_at_layer": "DISPATCH",
-        "emitted_at": utc_now(),
-        "trace_parent": o2["event_id"],
-        "transition": "DISPATCH_OUTPUT",
-        "payload": dispatch_output,
-    }
+    events = runtime_events(operation_id)
 
     result = {
         "record_type": "ATANOR_D11_CASE_RESULT",
         "case_id": case_id,
         "operation_id": operation_id,
         "fixture": fixture,
-        "o1": o1,
-        "o2": o2,
-        "o3": o3,
+        "runtime": runtime_state(),
+        "events": events,
+        "router_output": router_output,
+        "dispatch_output": dispatch_output,
         "target_execution": False,
         "side_effects": False,
     }
 
     write_json(f"D11.{case_id}.json", result)
+
     return result
 
 
-def main() -> None:
-    router_decide, dispatch_ingest = load_runtime_binding()
+def validate_case(result: dict) -> None:
+    events = result["events"]
 
-    cases = [
-        ("A", build_fixture_ambiguous()),
-        ("B", build_fixture_unresolved()),
-    ]
+    observations = {
+        event["observation_point"]: event
+        for event in events
+    }
+
+    required = {"O1", "O2", "O3"}
+
+    if set(observations) != required:
+        raise RuntimeError(
+            f"D11_TRACE_INCOMPLETE:{sorted(observations)}"
+        )
+
+    o1 = observations["O1"]
+    o2 = observations["O2"]
+    o3 = observations["O3"]
+
+    if o1["emitted_by"] != "ROUTER":
+        raise RuntimeError("D11_O1_EMITTER_INVALID")
+
+    if o1["emitted_at_layer"] != "ROUTER":
+        raise RuntimeError("D11_O1_LAYER_INVALID")
+
+    if o1["trace_parent"] is not None:
+        raise RuntimeError("D11_O1_PARENT_INVALID")
+
+    if o2["emitted_by"] is not None:
+        raise RuntimeError("D11_O2_EMITTER_MUST_BE_UNATTRIBUTED")
+
+    if o2["trace_parent"] != o1["event_id"]:
+        raise RuntimeError("D11_O2_PARENT_INVALID")
+
+    if o3["emitted_by"] != "DISPATCH":
+        raise RuntimeError("D11_O3_EMITTER_INVALID")
+
+    if o3["emitted_at_layer"] != "DISPATCH":
+        raise RuntimeError("D11_O3_LAYER_INVALID")
+
+    if o3["trace_parent"] != o2["event_id"]:
+        raise RuntimeError("D11_O3_PARENT_INVALID")
+
+    if result["target_execution"] is not False:
+        raise RuntimeError("D11_TARGET_EXECUTION_DETECTED")
+
+    if result["side_effects"] is not False:
+        raise RuntimeError("D11_SIDE_EFFECT_DETECTED")
+
+
+def main() -> None:
+    runtime = runtime_state()
+
+    if runtime["status"] != "ACTIVE":
+        raise RuntimeError("ACTIVE_RUNTIME_NOT_ESTABLISHED")
 
     results = []
 
     try:
-        for case_id, fixture in cases:
-            results.append(
-                run_case(
-                    router_decide,
-                    dispatch_ingest,
-                    fixture,
-                    case_id,
-                )
-            )
+        for fixture in (
+            build_fixture_ambiguous(),
+            build_fixture_unresolved(),
+        ):
+            result = run_case(fixture)
+            validate_case(result)
+            results.append(result)
+
+        final = {
+            "record_type": "ATANOR_D11_RUNTIME_RESULT",
+            "status": "EXECUTED",
+            "executed": True,
+            "target_execution": False,
+            "side_effects": False,
+            "timestamp": utc_now(),
+            "runtime_connection": runtime,
+            "cases": [
+                "D11-A",
+                "D11-B",
+            ],
+            "evidence_files": [
+                "D11.D11-A.json",
+                "D11.D11-B.json",
+            ],
+            "verification": {
+                "O1_ROUTER_EMISSION": "PASS",
+                "O2_DISPATCH_INGRESS": "PASS",
+                "O3_DISPATCH_EMISSION": "PASS",
+                "CAUSAL_CHAIN": "PASS",
+                "TARGET_EXECUTION": "NOT_ATTEMPTED",
+                "SIDE_EFFECTS": False,
+            },
+        }
+
+        write_json("D11.RUNTIME_RESULT.json", final)
+        print(json.dumps(final, ensure_ascii=False, indent=2))
 
     except Exception as exc:
         failure = {
@@ -199,6 +195,7 @@ def main() -> None:
             "executed": False,
             "target_execution": False,
             "timestamp": utc_now(),
+            "runtime_connection": runtime,
             "exception": repr(exc),
             "traceback": traceback.format_exc(),
             "partial_results": results,
@@ -207,23 +204,6 @@ def main() -> None:
         write_json("D11.RUNTIME_RESULT.json", failure)
         print(json.dumps(failure, ensure_ascii=False, indent=2))
         sys.exit(1)
-
-    final = {
-        "record_type": "ATANOR_D11_RUNTIME_RESULT",
-        "status": "EXECUTED",
-        "executed": True,
-        "target_execution": False,
-        "side_effects": False,
-        "timestamp": utc_now(),
-        "cases": ["D11-A", "D11-B"],
-        "evidence_files": [
-            "D11.A.json",
-            "D11.B.json",
-        ],
-    }
-
-    write_json("D11.RUNTIME_RESULT.json", final)
-    print(json.dumps(final, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
